@@ -2,10 +2,8 @@ package lippia.web.services;
 
 import com.crowdar.core.PropertyManager;
 import com.crowdar.core.actions.ActionManager;
-import com.crowdar.driver.DriverManager;
 import lippia.web.constants.HomePageConstants;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
 import java.util.List;
@@ -25,6 +23,7 @@ public class HomePageService extends ActionManager {
 
     public static void clickArrival() {
         click(HomePageConstants.ARRIVAL);
+        BaseService.cerrarPopup("Sellect Arrival");
     }
 
     public static void findAddToBacketButton() {
@@ -32,19 +31,20 @@ public class HomePageService extends ActionManager {
     }
 
     public static void clickAddToBasketButton() {
+        BaseService.scrollDown("200");
         click(HomePageConstants.ADD_TO_BASKET_BUTTON);
     }
 
     public static void verifyMenuItem() {
+        BaseService.getMyWait();
         String cartcontents = getText(HomePageConstants.CART_CONTENTS);
         Assert.assertNotEquals(cartcontents, "0 items", "La cantidad de items en el carrito es 0");
-
-        String amount = getText(HomePageConstants.CART_AMOUNT);
-        Assert.assertNotEquals(amount, "₹0.00", "El dinero en el carrito es 0.00");
     }
 
     public static void clickCartButton() {
-        click(HomePageConstants.CART_CONTENTS);
+        BaseService.getMyWait();
+        click(HomePageConstants.SHOPPING_CART);
+        BaseService.cerrarPopup("Shopping Cart");
     }
 
     public static void verifyPosition() {
@@ -70,6 +70,8 @@ public class HomePageService extends ActionManager {
         return Double.parseDouble(total.getText().substring(1));
     }
     public static void clickCheckoutButton() {
+        BaseService.scrollDown("400");
+        BaseService.getMyWait();
         click(HomePageConstants.CHECKOUT_BUTTON);
     }
 
@@ -78,38 +80,27 @@ public class HomePageService extends ActionManager {
     }
 
     public static void setCountry(String country) {
+        BaseService.scrollDown("500");
         setInput(HomePageConstants.INPUT_COUNTRY, country);
-        Actions action = new Actions(DriverManager.getDriverInstance());
-        WebElement element = getElement(HomePageConstants.COUNTRY_FIRST_OPTION);
-        action.moveToElement(element).click();
-//        waitVisibility(HomePageConstants.COUNTRY_FIRST_OPTION);
-//        click(HomePageConstants.COUNTRY_FIRST_OPTION);
+        if (country.equals("India")){
+            click(HomePageConstants.COUNTRY_INDIA);
+        }else {
+            click(HomePageConstants.COUNTRY_FIRST_OPTION);
+        }
     }
 
     public static void setState(String state){
         setInput(HomePageConstants.INPUT_STATE, state);
-        Actions action = new Actions(DriverManager.getDriverInstance());
-        WebElement element = getElement(HomePageConstants.STATE_FIRST_OPTION);
-        action.moveToElement(element).click();
-//        waitVisibility(HomePageConstants.STATE_FIRST_OPTION);
-//        click(HomePageConstants.STATE_FIRST_OPTION);
+        click(HomePageConstants.STATE_FIRST_OPTION);
     }
 
-    public static void setPayment(String payment){
-//        setCheckbox(String.format(HomePageConstants.INPUT_PAYMENT,payment), false);
-//        click(String.format(HomePageConstants.INPUT_PAYMENT,payment));
-//
-//        getElement(String.format(HomePageConstants.INPUT_PAYMENT,payment)).;
-
-        Actions action = new Actions(DriverManager.getDriverInstance());
-        WebElement element = getElement(String.format(HomePageConstants.INPUT_PAYMENT,payment));
-        action.moveToElement(element).click();
+    public static void verifyPayment(String payment){
+        BaseService.scrollDown("800");
+        Assert.assertTrue(getElement(String.format(HomePageConstants.INPUT_PAYMENT,payment)).isDisplayed(), "La opcion de pago no se selecciono");
     }
 
     public static void verifyAddCoupon() {
-//        Actions action = new Actions(DriverManager.getDriverInstance());
-//        WebElement element = getElement(HomePageConstants.SHOW_COUPON);
-//        action.moveToElement(element).click();
+        BaseService.scrollTop();
         click(HomePageConstants.SHOW_COUPON);
         Assert.assertTrue(getElement(HomePageConstants.COUPON_FORM).isDisplayed(), "No se encotro el formulario para agregar cupon");
     }
@@ -119,6 +110,7 @@ public class HomePageService extends ActionManager {
     }
 
     public static void clickPlaceOrderButton() {
+        BaseService.scrollbottom();
         click(HomePageConstants.PLACEORDER_BUTTON);
     }
 

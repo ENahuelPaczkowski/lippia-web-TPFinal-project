@@ -79,9 +79,9 @@ public class HomePageSteps extends PageSteps {
         HomePageService.setState(state);
     }
 
-    @And("user select payment {string}")
+    @Then("user can select payment {string}")
     public void userSelectPayment(String payment) {
-        HomePageService.setPayment(payment);
+        HomePageService.verifyPayment(payment);
     }
 
     @Then("user has the feasibility to add coupon in the payment gateway page")

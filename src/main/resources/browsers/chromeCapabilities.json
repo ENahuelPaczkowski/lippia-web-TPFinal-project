@@ -1,8 +1,16 @@
 {
-	"browserName": "chrome",
-	"goog:chromeOptions": {"args": ["disable-infobars", "--ignore-certificate-errors", "start-maximized"], 
-						   "extensions": [],
-						   "prefs": {"printing.enabled": false}
-	}, 
-	"platform": "ANY"
+  "browserName": "chrome",
+  "goog:chromeOptions": {
+    "args": [
+      "disable-infobars",
+      "--ignore-certificate-errors",
+      "start-maximized",
+      "--load-extensions=C:\\Users\\Nahuel\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\cfhdojbkjhnklbpkdaibdccddilifddb\\3.14.2_0\\"
+    ],
+    "extensions": [],
+    "prefs": {
+      "printing.enabled": false
+    }
+  },
+  "platform": "ANY"
 } 

@@ -2,9 +2,7 @@ package lippia.web.services;
 
 import com.crowdar.core.actions.ActionManager;
 import com.crowdar.driver.DriverManager;
-import lippia.web.constants.BaseConstants;
-import lippia.web.constants.MyAccountConstants;
-import org.testng.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 
 import static com.crowdar.core.actions.WebActionManager.navigateTo;
 
@@ -16,6 +14,10 @@ public class BaseService extends ActionManager {
             setUrl(boton);
         }
 
+    }
+    public static void cerrarPopup() {
+        String url = DriverManager.getDriverInstance().getCurrentUrl();
+        navigateTo(url.replace("/#google_vignette",""));
     }
 
     public static void setUrl(String boton) {
@@ -35,8 +37,38 @@ public class BaseService extends ActionManager {
             case "Home":
                 navigateTo("https://practice.automationtesting.in/");
                 break;
+            case "Shopping Cart":
+                navigateTo("https://practice.automationtesting.in/basket/");
+                break;
+            case "Sellect Arrival":
+                navigateTo("https://practice.automationtesting.in/product/selenium-ruby/");
+                break;
             default:
                 System.out.println("No se encontro la url");
+        }
+    }
+
+    public static void scrollDown(String pixels){
+        String script = String.format("window.scrollBy(0,%s)", pixels);
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriverInstance();
+        js.executeScript(script);
+    }
+
+    public static void scrollTop(){
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriverInstance();
+        js.executeScript("window.scrollTo(0, 0)");
+    }
+
+    public static void scrollbottom(){
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriverInstance();
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
+    public static void getMyWait(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
